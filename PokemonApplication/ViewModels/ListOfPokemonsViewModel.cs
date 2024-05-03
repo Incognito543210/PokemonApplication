@@ -12,12 +12,12 @@ using System.Text;
 using System.Threading.Tasks;
 namespace PokemonApplication.ViewModels
 {
-    public partial class ListOfPokemonsViewModel: BaseViewModel
+    public partial class ListOfPokemonsViewModel : BaseViewModel
     {
         IPokemonApiService _pokemonApiService;
 
         public ObservableCollection<PokemonInList> PokemonsList { get; } = new();
-        private List<PokemonInList> _fullPokemonsList =  new List<PokemonInList> ();
+        public List<PokemonInList> _fullPokemonsList = new List<PokemonInList>();
 
         public ListOfPokemonsViewModel(IPokemonApiService pokemonApiService)
         {
@@ -27,7 +27,7 @@ namespace PokemonApplication.ViewModels
         }
 
         [ObservableProperty]
-         string pokemonToSearch;
+        string pokemonToSearch;
 
         [ObservableProperty]
         private string iconPokemon;
@@ -45,11 +45,11 @@ namespace PokemonApplication.ViewModels
         private string errorMessage;
 
 
-       public void ShowError(string errorMessage)
+        public void ShowError(string errorMessage)
         {
-          IsErrorVisible = true;
-           ErrorMessage = errorMessage;
-       }
+            IsErrorVisible = true;
+            ErrorMessage = errorMessage;
+        }
 
         public void HideError()
         {
@@ -74,7 +74,7 @@ namespace PokemonApplication.ViewModels
             }
         }
 
-     
+
 
         [RelayCommand]
         private async Task GetListOfPokemons()
@@ -90,14 +90,14 @@ namespace PokemonApplication.ViewModels
 
                     PokemonInList pokemonIn = new PokemonInList(NamePokemon, IconPokemon);
 
-                   
+
                     _fullPokemonsList.Add(pokemonIn);
                 }
                 UpdateDisplayedPokemonsList();
             }
             else
             {
-                  ShowError("Nie udało się pobrać listy pokemonów");
+                ShowError("Nie udało się pobrać listy pokemonów");
             }
 
         }
@@ -122,7 +122,7 @@ namespace PokemonApplication.ViewModels
             }
             else
             {
-                
+
                 // Filter the list based on the partial name
                 var filteredPokemons = _fullPokemonsList.Where(p => p.Name.Contains(PokemonToSearch, StringComparison.OrdinalIgnoreCase)).ToList();
                 PokemonsList.Clear();
@@ -158,7 +158,19 @@ namespace PokemonApplication.ViewModels
         [RelayCommand]
         async Task CheckYouKonwledge()
         {
-            await Shell.Current.GoToAsync($"{nameof(CheckYourKnowledgePage)}");
+            HideError();
+
+            if (_fullPokemonsList != null)
+            {
+                await Shell.Current.GoToAsync($"{nameof(CheckYourKnowledgePage)}", true, new Dictionary<string, object>
+            {
+                {"PokemonsInList", _fullPokemonsList }
+            });
+            }
+            else
+            {
+                ShowError("Brak listy pokemonów, z których możnaby przeprowadzić quiz");
+            }
         }
 
 

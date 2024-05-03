@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:DataType="vm:CheckYourKnowledgeViewModel"
              x:Class="PokemonApplication.View.CheckYourKnowledgePage"
               xmlns:vm="clr-namespace:PokemonApplication.ViewModels"
               xmlns:m="clr-namespace:PokemonApplication.Models"
-             Title="CheckYourKnowledgePage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             Title="Check Your Knowledge">
+    <StackLayout VerticalOptions="Center" HorizontalOptions="CenterAndExpand" Padding="20">
+        <Frame WidthRequest="600">
+            <Image x:Name="pokemon_Image" Source="{Binding Pokemon.Image}" WidthRequest="300" HeightRequest="200"/>
+        </Frame>
+        <Entry x:Name="answer_Entry" Placeholder="Enter your answer" Text="{Binding AnswerEntry}"/>
+
+        <Label x:Name="result_Label" Text="" FontSize="20" TextColor="Red" HorizontalOptions="Center"/>
+        
+        <Button x:Name="check_Button" Text="Check" Command="{Binding CheckAnswerCommand}"/>
+
+        <Button x:Name="next_Button" Text="Next Pokemon" Command="{Binding NextQuestionCommand}"/>
+
+    </StackLayout>
 </ContentPage>
