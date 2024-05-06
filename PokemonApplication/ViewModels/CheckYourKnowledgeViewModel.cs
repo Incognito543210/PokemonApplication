@@ -22,6 +22,7 @@ namespace PokemonApplication.ViewModels
             isCheckAnswerButtonVisible = false;
             isAnswerEntryVisible = false;
             isResultLabelVisible = false;
+            isEndQuizButtonVisible = false;
         }
 
         [ObservableProperty]
@@ -42,6 +43,8 @@ namespace PokemonApplication.ViewModels
         private bool isAnswerEntryVisible;
         [ObservableProperty]
         private bool isResultLabelVisible;
+        [ObservableProperty]
+        private bool isEndQuizButtonVisible;
 
         [ObservableProperty]
         private string point_LabelText;
@@ -93,6 +96,7 @@ namespace PokemonApplication.ViewModels
         [RelayCommand]
         public void NextQuestion()
         {
+            questions++;
             RandomizeQuestions();
             updatePoints();
             IsCheckAnswerEnabled = true;
@@ -113,7 +117,20 @@ namespace PokemonApplication.ViewModels
             IsCheckAnswerButtonVisible = true;
             IsAnswerEntryVisible = true;
             IsResultLabelVisible = true;
+            IsEndQuizButtonVisible = true;
             updatePoints();
+        }
+
+        [RelayCommand]
+        public void EndQuiz()
+        {
+            IsStartButtonVisible = true;
+            IsImageVisible = false;
+            IsNextQuestionButtonVisible = false;
+            IsCheckAnswerButtonVisible = false;
+            IsAnswerEntryVisible = false;
+            IsEndQuizButtonVisible = false;
+            Point_LabelText = $"Your final score: {points}/{questions}";
         }
     }
 }

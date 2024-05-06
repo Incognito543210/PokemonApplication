@@ -23,15 +23,15 @@
                 HorizontalOptions="Center"
                 Margin="0,20,0,0"/>
 
-        <Frame WidthRequest="600"
+        <Frame WidthRequest="300"
                CornerRadius="10"
                Margin="0,20,0,0"
                IsVisible="{Binding IsImageVisible}">
             <Image x:Name="pokemon_Image"
                    Source="{Binding Pokemon.Image}"
                    Aspect="AspectFit"
-                   HeightRequest="300"
-                   WidthRequest="300"
+                   HeightRequest="200"
+                   WidthRequest="200"
                    IsVisible="{Binding IsImageVisible}"/>
         </Frame>
 
@@ -62,6 +62,13 @@
                 Text="Next Pokemon"
                 Command="{Binding NextQuestionCommand}"
                 IsVisible="{Binding IsNextQuestionButtonVisible}"
+                HorizontalOptions="Center"
+                Margin="0,20,0,0"/>
+
+        <Button x:Name="endQuiz_Button"
+                Text="End Quiz"
+                Command="{Binding EndQuizCommand}"
+                IsVisible="{Binding IsEndQuizButtonVisible}"
                 HorizontalOptions="Center"
                 Margin="0,20,0,0"/>
 
