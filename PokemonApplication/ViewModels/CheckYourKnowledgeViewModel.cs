@@ -116,6 +116,7 @@ namespace PokemonApplication.ViewModels
             IsNextQuestionButtonVisible = true;
             IsCheckAnswerButtonVisible = true;
             IsAnswerEntryVisible = true;
+            Result_LabelText = "";
             IsResultLabelVisible = true;
             IsEndQuizButtonVisible = true;
             updatePoints();
@@ -130,6 +131,7 @@ namespace PokemonApplication.ViewModels
             IsCheckAnswerButtonVisible = false;
             IsAnswerEntryVisible = false;
             IsEndQuizButtonVisible = false;
+            IsResultLabelVisible= false;
             Point_LabelText = $"Your final score: {points}/{questions}";
         }
     }
