@@ -21,10 +21,20 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
+
+
+
     <Grid ColumnDefinitions="*,*"
           ColumnSpacing="5"
           RowDefinitions="*,Auto,60"
           RowSpacing="0">
+
+        <Label Text="{Binding ErrorMessage}"
+           IsVisible="{Binding IsErrorVisible}"
+           TextColor="Red"
+           Grid.Row="0"
+           Grid.ColumnSpan="2"
+           Margin="8"/>
 
         <CollectionView Background="Transparent"
                         Grid.ColumnSpan="2"
@@ -65,21 +75,27 @@
             
         </CollectionView>
 
+      
+
+
         <Button Text="Search"
                 Grid.Row="1"
                 Grid.Column="0"
                 Command="{Binding SearchPokemonListCommand}"
-                Margin="8"/>
+                Margin="8"
+                />
         <Entry Grid.Row="1"  
                Grid.Column="1" 
                Placeholder="Enter Pokemon Name"  
                Text="{Binding PokemonToSearch} "/>
 
-        <Button Text="Check your konwleadge"
+        <Button Text="Check your konwledge"
                 Grid.Row="2"
                 Grid.ColumnSpan="2"
                 Command="{Binding CheckYouKonwledgeCommand}"
                 Margin="8"/>
+    
+
 
 
     </Grid>

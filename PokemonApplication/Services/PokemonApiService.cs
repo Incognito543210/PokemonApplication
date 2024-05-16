@@ -47,8 +47,8 @@ namespace PokemonApplication.Services
                 return null;
             }
 
-           
-           return await _httpClient.GetFromJsonAsync<PokemonsListApiResponse>($"?limit=10&offset=0");
+
+            return await _httpClient.GetFromJsonAsync<PokemonsListApiResponse>($"?limit=100&offset=0");
 
         }
     }

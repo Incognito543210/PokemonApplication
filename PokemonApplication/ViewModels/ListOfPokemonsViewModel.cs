@@ -44,6 +44,9 @@ namespace PokemonApplication.ViewModels
         [ObservableProperty]
         private string errorMessage;
 
+        [ObservableProperty]
+        private bool getPokemon = true;
+
 
         public void ShowError(string errorMessage)
         {
@@ -66,11 +69,13 @@ namespace PokemonApplication.ViewModels
                 NamePokemon = pokemonApiResponse.Name;
                 HpPokemon = pokemonApiResponse.Weight;
                 IconPokemon = pokemonApiResponse.Sprites.front_default;
-
+                getPokemon = true;
             }
             else
             {
-                ShowError("Nie udało się pobrać listy pokemonów");
+                ShowError("Could not be found of Pokemon. Please check your internet connection and try again.");
+                getPokemon = false;
+
             }
         }
 
@@ -86,8 +91,13 @@ namespace PokemonApplication.ViewModels
             {
                 foreach (var pokemon in pokemonListApiResponse.Results)
                 {
+                    
                     SearchPokemonInformation(pokemon.Name);
 
+                    if(getPokemon == false)
+                    {
+                        continue;
+                    }
                     PokemonInList pokemonIn = new PokemonInList(NamePokemon, IconPokemon);
 
 
@@ -97,7 +107,8 @@ namespace PokemonApplication.ViewModels
             }
             else
             {
-                ShowError("Nie udało się pobrać listy pokemonów");
+                ShowError("Failed to load Pokemon list. Please check your internet connection and try again.");
+
             }
 
         }
@@ -116,19 +127,30 @@ namespace PokemonApplication.ViewModels
         private void SearchPokemonList()
         {
             HideError();
-            if (string.IsNullOrWhiteSpace(PokemonToSearch))
+
+            if (_fullPokemonsList.Count==0)
             {
-                UpdateDisplayedPokemonsList();
+                GetListOfPokemons();
             }
+
             else
             {
 
-                // Filter the list based on the partial name
-                var filteredPokemons = _fullPokemonsList.Where(p => p.Name.Contains(PokemonToSearch, StringComparison.OrdinalIgnoreCase)).ToList();
-                PokemonsList.Clear();
-                foreach (var pokemon in filteredPokemons)
+
+                if (string.IsNullOrWhiteSpace(PokemonToSearch))
                 {
-                    PokemonsList.Add(pokemon);
+                    UpdateDisplayedPokemonsList();
+                }
+                else
+                {
+
+                    // Filter the list based on the partial name
+                    var filteredPokemons = _fullPokemonsList.Where(p => p.Name.Contains(PokemonToSearch, StringComparison.OrdinalIgnoreCase)).ToList();
+                    PokemonsList.Clear();
+                    foreach (var pokemon in filteredPokemons)
+                    {
+                        PokemonsList.Add(pokemon);
+                    }
                 }
             }
         }
@@ -151,7 +173,7 @@ namespace PokemonApplication.ViewModels
             }
             else
             {
-                ShowError("Nie udało się pobrać informacji o pokemonie");
+                ShowError("Failed to retrieve Pokemon information");
             }
         }
 
@@ -160,7 +182,7 @@ namespace PokemonApplication.ViewModels
         {
             HideError();
 
-            if (_fullPokemonsList != null)
+            if (_fullPokemonsList.Count>0)
             {
                 await Shell.Current.GoToAsync($"{nameof(CheckYourKnowledgePage)}", true, new Dictionary<string, object>
             {
@@ -169,7 +191,7 @@ namespace PokemonApplication.ViewModels
             }
             else
             {
-                ShowError("Brak listy pokemonów, z których możnaby przeprowadzić quiz");
+                ShowError("No list of Pokemon to quiz on");
             }
         }
 
