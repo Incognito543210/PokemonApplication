@@ -91,10 +91,16 @@
 
         <Button Text="Check your konwledge"
                 Grid.Row="2"
-                Grid.ColumnSpan="2"
+                Grid.Column="0"
                 Command="{Binding CheckYouKonwledgeCommand}"
                 Margin="8"/>
-    
+
+        <Button Text="Change the order"
+         Grid.Row="2"
+         Grid.Column="1"
+         Command="{Binding ReverseListOfPokemonCommand}"
+         Margin="8"/>
+
 
 
 

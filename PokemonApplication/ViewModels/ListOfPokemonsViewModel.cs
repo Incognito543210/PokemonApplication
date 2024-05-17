@@ -195,6 +195,25 @@ namespace PokemonApplication.ViewModels
             }
         }
 
+        [RelayCommand]
+        async Task ReverseListOfPokemon()
+        {
+
+            HideError();
+
+            if (_fullPokemonsList.Count == 0)
+            {
+                GetListOfPokemons();
+            }
+
+            else
+            {
+                _fullPokemonsList.Reverse();
+                UpdateDisplayedPokemonsList();
+                
+            }
+        }
+
 
     }
 }
